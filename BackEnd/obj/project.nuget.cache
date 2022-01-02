@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YOwiGgp+kFpswwiz1a47GZ98KxDZSLRxKADGHKK0M90x8Rh2NBGVPS5ULD9DqGa1CHQZMILFgKBtKmDYebENlA==",
+  "dgSpecHash": "S53HGbvE38RyHbOyi0TQC/hYcGjTSYDvSeByBwayrbKRRhpQDU+swdXZ0idMda3oWx7vz9DnsJ2g8uAyrnyJzQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Kodake\\Desktop\\BackEnd\\BackEnd\\BackEnd.csproj",
+  "projectFilePath": "C:\\Users\\Kodake\\Desktop\\MoviesAPI\\BackEnd\\BackEnd\\BackEnd.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kodake\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\Kodake\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",

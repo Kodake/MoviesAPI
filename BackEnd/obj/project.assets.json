@@ -9774,11 +9774,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Kodake\\Desktop\\BackEnd\\BackEnd\\BackEnd.csproj",
+      "projectUniqueName": "C:\\Users\\Kodake\\Desktop\\MoviesAPI\\BackEnd\\BackEnd\\BackEnd.csproj",
       "projectName": "BackEnd",
-      "projectPath": "C:\\Users\\Kodake\\Desktop\\BackEnd\\BackEnd\\BackEnd.csproj",
+      "projectPath": "C:\\Users\\Kodake\\Desktop\\MoviesAPI\\BackEnd\\BackEnd\\BackEnd.csproj",
       "packagesPath": "C:\\Users\\Kodake\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Kodake\\Desktop\\BackEnd\\BackEnd\\obj\\",
+      "outputPath": "C:\\Users\\Kodake\\Desktop\\MoviesAPI\\BackEnd\\BackEnd\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Kodake\\AppData\\Roaming\\NuGet\\NuGet.Config",
