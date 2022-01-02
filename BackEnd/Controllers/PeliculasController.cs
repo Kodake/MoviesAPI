@@ -1,4 +1,6 @@
-﻿using BackEnd.Entities;
+﻿using AutoMapper;
+using BackEnd.DTOs;
+using BackEnd.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,17 +11,23 @@ namespace BackEnd.Controllers
     public class PeliculasController : ControllerBase
     {
         public ApplicationDbContext _context { get; }
+        public IMapper _mapper { get; }
 
-        public PeliculasController(ApplicationDbContext context)
+        public PeliculasController(ApplicationDbContext context, IMapper mapper)
         {
             this._context = context;
+            this._mapper = mapper;
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Pelicula>> Get(int id)
+        public async Task<ActionResult<PeliculaDTO>> Get(int id)
         {
-            var pelicula = await _context.Peliculas
+            Pelicula pelicula = await _context.Peliculas
                 .Include(p => p.Generos)
+                .Include(p => p.SalasDeCine)
+                    .ThenInclude(p => p.Cine)
+                .Include(p => p.PeliculasActores)
+                    .ThenInclude(p => p.Actor)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (pelicula == null)
@@ -27,7 +35,10 @@ namespace BackEnd.Controllers
                 return NotFound();
             }
 
-            return pelicula;
+            PeliculaDTO peliculaDTO = _mapper.Map<PeliculaDTO>(pelicula);
+            peliculaDTO.Cines = peliculaDTO.Cines.DistinctBy(x => x.Id).ToList();
+
+            return peliculaDTO;
         }
     }
 }
