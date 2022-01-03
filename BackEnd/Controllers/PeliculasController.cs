@@ -158,5 +158,25 @@ namespace BackEnd.Controllers
 
             return _mapper.Map<List<PeliculaDTO>>(peliculas);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(PeliculaCreacionDTO peliculaDTO)
+        {
+            Pelicula pelicula = _mapper.Map<Pelicula>(peliculaDTO);
+            pelicula.Generos.ForEach(p => _context.Entry(p).State = EntityState.Unchanged);
+            pelicula.SalasDeCine.ForEach(p => _context.Entry(p).State = EntityState.Unchanged);
+
+            if (pelicula.PeliculasActores is not null)
+            {
+                for (int i = 0; i < pelicula.PeliculasActores.Count; i++)
+                {
+                    pelicula.PeliculasActores[i].Orden = i + 1;
+                }
+            }
+
+            _context.Add(pelicula);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

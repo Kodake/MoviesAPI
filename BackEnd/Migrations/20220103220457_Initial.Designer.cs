@@ -13,7 +13,7 @@ using NetTopologySuite.Geometries;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211231213606_Initial")]
+    [Migration("20220103220457_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,16 +182,16 @@ namespace BackEnd.Migrations
                         {
                             Id = 2,
                             CineId = 4,
-                            FechaFin = new DateTime(2022, 1, 5, 0, 0, 0, 0, DateTimeKind.Local),
-                            FechaInicio = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaFin = new DateTime(2022, 1, 8, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaInicio = new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             PorcentajeDescuento = 15m
                         },
                         new
                         {
                             Id = 1,
                             CineId = 1,
-                            FechaFin = new DateTime(2022, 1, 7, 0, 0, 0, 0, DateTimeKind.Local),
-                            FechaInicio = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaFin = new DateTime(2022, 1, 10, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaInicio = new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             PorcentajeDescuento = 10m
                         });
                 });
@@ -203,6 +203,9 @@ namespace BackEnd.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Identificador"), 1L, 1);
+
+                    b.Property<bool>("EstaBorrado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -217,26 +220,31 @@ namespace BackEnd.Migrations
                         new
                         {
                             Identificador = 1,
+                            EstaBorrado = false,
                             Nombre = "Acción"
                         },
                         new
                         {
                             Identificador = 2,
+                            EstaBorrado = false,
                             Nombre = "Animación"
                         },
                         new
                         {
                             Identificador = 3,
+                            EstaBorrado = false,
                             Nombre = "Comedia"
                         },
                         new
                         {
                             Identificador = 4,
+                            EstaBorrado = false,
                             Nombre = "Ciencia ficción"
                         },
                         new
                         {
                             Identificador = 5,
+                            EstaBorrado = false,
                             Nombre = "Drama"
                         });
                 });
@@ -306,7 +314,7 @@ namespace BackEnd.Migrations
                         {
                             Id = 5,
                             EnCartelera = true,
-                            FechaEstreno = new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaEstreno = new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             PosterURL = "https://upload.wikimedia.org/wikipedia/en/5/50/The_Matrix_Resurrections.jpg",
                             Titulo = "The Matrix Resurrections"
                         });

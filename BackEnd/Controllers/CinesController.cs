@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using BackEnd.DTOs;
+using BackEnd.Entities;
+using BackEnd.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite;
@@ -31,7 +33,6 @@ namespace BackEnd.Controllers
         public async Task<ActionResult> Get(double latitud, double longitud)
         {
             var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
-
             var miUbicacion = geometryFactory.CreatePoint(new Coordinate(longitud, latitud));
             var distanciaMaximaEnMetros = 2000;
 
@@ -45,6 +46,51 @@ namespace BackEnd.Controllers
                 }).ToListAsync();
 
             return Ok(cines);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] CineDTO cineDTO)
+        {
+            var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
+            var ubicacionCine = geometryFactory.CreatePoint(new Coordinate(-69.896979, 18.476276));
+
+            Cine cine = new Cine()
+            {
+                Nombre = "Coral Cine",
+                Ubicacion = ubicacionCine,
+                CineOferta = new CineOferta()
+                {
+                    PorcentajeDescuento = 5,
+                    FechaInicio = DateTime.Today,
+                    FechaFin = DateTime.Today.AddDays(3)
+                },
+                SalasDeCine = new HashSet<SalaDeCine>()
+                {
+                    new SalaDeCine()
+                    {
+                        Precio = 200,
+                        TipoSalaDeCine = TipoSalaDeCine.DosDimensiones
+                    },
+                    new SalaDeCine()
+                    {
+                        Precio = 300,
+                        TipoSalaDeCine = TipoSalaDeCine.TresDimensiones
+                    },
+                }
+            };
+
+            _context.Add(cine);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPost("with-dto")]
+        public async Task<ActionResult> PostWithDTO(CineCreacionDTO cineDTO)
+        {
+            var cine = _mapper.Map<Cine>(cineDTO);
+            _context.Add(cine);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }

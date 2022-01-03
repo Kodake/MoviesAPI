@@ -9,11 +9,7 @@ namespace BackEnd.Entities
         //[StringLength(100)] o //[MaxLength(100)]
         //[Required]
         public string Nombre { get; set; }
+        public bool EstaBorrado { get; set; }
         public HashSet<Pelicula> Peliculas { get; set; }
-
-        public static implicit operator Genero(List<Genero> v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

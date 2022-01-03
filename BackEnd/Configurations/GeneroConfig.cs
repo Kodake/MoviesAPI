@@ -14,6 +14,8 @@ namespace BackEnd.Configurations
             builder.Property(prop => prop.Nombre)
                     .HasMaxLength(100)
                     .IsRequired();
+
+            builder.HasQueryFilter(prop => !prop.EstaBorrado);
         }
     }
 }

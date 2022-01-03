@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using BackEnd.DTOs;
+using BackEnd.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,6 +46,48 @@ namespace BackEnd.Controllers
             }
 
             return Ok(actores);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Post(ActorCreacionDTO actorDTO)
+        {
+            Actor actor = _mapper.Map<Actor>(actorDTO);
+            _context.Add(actor);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(ActorCreacionDTO actorDTO, int id)
+        {
+            Actor actorDB = await _context.Actores.AsTracking().FirstOrDefaultAsync(p => p.Id == id);
+
+            if (actorDB == null)
+            {
+                return NotFound();
+            }
+
+            actorDB = _mapper.Map(actorDTO, actorDB);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPut("desconectado/{id:int}")]
+        public async Task<ActionResult> PutDesconectado(ActorCreacionDTO actorDTO, int id)
+        {
+            bool existeActor = await _context.Actores.AnyAsync(p => p.Id == id);
+
+            if (!existeActor)
+            {
+                return NotFound();
+            }
+
+            Actor actor = _mapper.Map<Actor>(actorDTO);
+            actor.Id = id;
+
+            _context.Update(actor);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }

@@ -15,6 +15,8 @@ namespace BackEnd.Configurations
 
             //builder.Property(prop => prop.FechaNacimiento)
             //      .HasColumnType("date");
+
+            builder.Property(x => x.Nombre).HasField("_nombre");
         }
     }
 }

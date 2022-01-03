@@ -17,7 +17,9 @@ namespace BackEnd.Controllers
         [HttpGet]
         public async Task<IEnumerable<Genero>> Get()
         {
-            return await _context.Generos.AsNoTracking().OrderBy(g => g.Nombre).ToListAsync();
+            return await _context.Generos.AsNoTracking()
+                //.Where(g => !g.EstaBorrado) commented because we added a filter with HasQueryFilter in GeneroConfig
+                .OrderBy(g => g.Nombre).ToListAsync();
         }
 
         [HttpGet("{id:int}")]
@@ -80,6 +82,69 @@ namespace BackEnd.Controllers
             }
 
             return Ok(generos);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Post(Genero genero)
+        {
+            _context.Add(genero);
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Género ageregado satisfactoriamente" });
+        }
+
+        [HttpPost("multiple")]
+        public async Task<ActionResult> PostMultiple(Genero[] generos)
+        {
+            _context.AddRange(generos);
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Género ageregado satisfactoriamente" });
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            Genero genero = await _context.Generos.FirstOrDefaultAsync(p => p.Identificador == id);
+
+            if (genero == null)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(genero);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> SoftDelete(int id)
+        {
+            Genero genero = await _context.Generos.AsTracking().FirstOrDefaultAsync(p => p.Identificador == id);
+
+            if (genero == null)
+            {
+                return NotFound();
+            }
+
+            genero.EstaBorrado = true;
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPost("{id:int}")]
+        public async Task<ActionResult> Restaurar(int id)
+        {
+            Genero genero = await _context.Generos.AsTracking()
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(p => p.Identificador == id);
+
+            if (genero == null)
+            {
+                return NotFound();
+            }
+
+            genero.EstaBorrado = false;
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }

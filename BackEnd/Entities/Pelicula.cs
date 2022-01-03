@@ -8,7 +8,7 @@
         public DateTime FechaEstreno { get; set; }
         public string PosterURL { get; set; }
         public List<Genero> Generos { get; set; }
-        public HashSet<SalaDeCine> SalasDeCine { get; set; }
-        public HashSet<PeliculaActor> PeliculasActores { get; set; }
+        public List<SalaDeCine> SalasDeCine { get; set; }
+        public List<PeliculaActor> PeliculasActores { get; set; }
     }
 }

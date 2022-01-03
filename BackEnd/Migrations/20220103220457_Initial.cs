@@ -45,7 +45,8 @@ namespace BackEnd.Migrations
                 {
                     Identificador = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    EstaBorrado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -213,14 +214,14 @@ namespace BackEnd.Migrations
 
             migrationBuilder.InsertData(
                 table: "Generos",
-                columns: new[] { "Identificador", "Nombre" },
+                columns: new[] { "Identificador", "EstaBorrado", "Nombre" },
                 values: new object[,]
                 {
-                    { 1, "Acción" },
-                    { 2, "Animación" },
-                    { 3, "Comedia" },
-                    { 4, "Ciencia ficción" },
-                    { 5, "Drama" }
+                    { 1, false, "Acción" },
+                    { 2, false, "Animación" },
+                    { 3, false, "Comedia" },
+                    { 4, false, "Ciencia ficción" },
+                    { 5, false, "Drama" }
                 });
 
             migrationBuilder.InsertData(
@@ -232,7 +233,7 @@ namespace BackEnd.Migrations
                     { 2, false, new DateTime(2017, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://upload.wikimedia.org/wikipedia/en/9/98/Coco_%282017_film%29_poster.jpg", "Coco" },
                     { 3, false, new DateTime(2021, 12, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg", "Spider-Man: No way home" },
                     { 4, false, new DateTime(2019, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg", "Spider-Man: Far From Home" },
-                    { 5, true, new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Local), "https://upload.wikimedia.org/wikipedia/en/5/50/The_Matrix_Resurrections.jpg", "The Matrix Resurrections" }
+                    { 5, true, new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Local), "https://upload.wikimedia.org/wikipedia/en/5/50/The_Matrix_Resurrections.jpg", "The Matrix Resurrections" }
                 });
 
             migrationBuilder.InsertData(
@@ -240,8 +241,8 @@ namespace BackEnd.Migrations
                 columns: new[] { "Id", "CineId", "FechaFin", "FechaInicio", "PorcentajeDescuento" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2022, 1, 7, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Local), 10m },
-                    { 2, 4, new DateTime(2022, 1, 5, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2021, 12, 31, 0, 0, 0, 0, DateTimeKind.Local), 15m }
+                    { 1, 1, new DateTime(2022, 1, 10, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Local), 10m },
+                    { 2, 4, new DateTime(2022, 1, 8, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2022, 1, 3, 0, 0, 0, 0, DateTimeKind.Local), 15m }
                 });
 
             migrationBuilder.InsertData(
